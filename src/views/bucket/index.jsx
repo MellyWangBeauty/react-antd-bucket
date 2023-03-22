@@ -27,12 +27,22 @@ class User extends Component {
       switch (type) {
         case 0:
           typeName = "自有空间";
+          break;
         case 1:
           typeName = "授权只读";
+          break;
         case 2:
           typeName = "授权读写";
+          break;
       }
-      authority === 0 ? (authorityName = "公开") : (authorityName = "私有");
+      switch (authority) {
+        case 0:
+          authorityName = "公开";
+          break;
+        case 1:
+          authorityName = "私有";
+          break;
+      }
       bucket[id] = { ...buc, type: typeName, authority: authorityName };
     });
     this.setState({
