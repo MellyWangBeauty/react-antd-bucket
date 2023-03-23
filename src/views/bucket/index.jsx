@@ -1,5 +1,16 @@
 import React, { Component } from "react";
-import { Card, Button, Table, message, Divider, Modal } from "antd";
+import {
+  Card,
+  Button,
+  Table,
+  message,
+  Divider,
+  Modal,
+  Select,
+  Collapse,
+  Form,
+  Input,
+} from "antd";
 import { Redirect, Link } from "react-router-dom";
 import { getUsers, deleteUser, editUser, addUser } from "@/api/user";
 import { bucketAdd, bucketQuery, checkExits, deleteBucket } from "@/api/bucket";
@@ -9,6 +20,7 @@ import AddUserForm from "./forms/add-user-form";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 const { confirm } = Modal;
 const { Column } = Table;
+const { Panel } = Collapse;
 class User extends Component {
   state = {
     bucket: [],
@@ -17,6 +29,11 @@ class User extends Component {
     currentRowData: {},
     addUserModalVisible: false,
     addUserModalLoading: false,
+    listQuery: {
+      bucketName: "",
+      type: "",
+      authority: "",
+    },
   };
   bucketQuery = async () => {
     let typeName, authorityName;
@@ -148,6 +165,32 @@ class User extends Component {
   componentDidMount() {
     this.bucketQuery();
   }
+  filterBucketNameChange = (e) => {
+    let value = e.target.value;
+    this.setState((state) => ({
+      listQuery: {
+        ...state.listQuery,
+        bucketName: value,
+      },
+    }));
+  };
+  filterTypeChange = (value) => {
+    this.setState((state) => ({
+      listQuery: {
+        ...state.listQuery,
+        type: value,
+      },
+    }));
+  };
+  filterAuthorityChange = (value) => {
+    this.setState((state) => ({
+      listQuery: {
+        ...state.listQuery,
+        authority: value,
+      },
+    }));
+  };
+
   render() {
     const { bucket } = this.state;
 
@@ -171,6 +214,44 @@ class User extends Component {
         {/* <TypingCard title='用户管理' source={cardContent} /> */}
         <br />
         <Card title={title}>
+          <Collapse defaultActiveKey={["1"]}>
+            <Panel header="筛选" key="1">
+              <Form layout="inline">
+                <Form.Item label="空间名称:">
+                  <Input onChange={this.filterBucketNameChange} />
+                </Form.Item>
+                <Form.Item label="空间类型:">
+                  <Select
+                    style={{ width: 120 }}
+                    onChange={this.filterTypeChange}
+                  >
+                    <Select.Option value={0}>自有空间</Select.Option>
+                    <Select.Option value={1}>授权只读</Select.Option>
+                    <Select.Option value={2}>授权读写</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item label="访问控制:">
+                  <Select
+                    style={{ width: 120 }}
+                    onChange={this.filterAuthorityChange}
+                  >
+                    <Select.Option value={0}>公开</Select.Option>
+                    <Select.Option value={1}>私有</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    icon="search"
+                    onClick={this.bucketQuery}
+                  >
+                    搜索
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Panel>
+          </Collapse>
+          <br />
           <Table bordered rowKey="id" dataSource={bucket} pagination={false}>
             <Column
               title="空间名称"
