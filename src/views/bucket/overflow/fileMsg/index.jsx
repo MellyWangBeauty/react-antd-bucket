@@ -229,6 +229,13 @@ class User extends Component {
         >
           空间设置
         </Button>
+        <Button
+          style={{ marginRight: 20 + "px", marginLeft: 20 + "px" }}
+          type="primary"
+          onClick={this.handleGoPage.bind(this, "/backUp")}
+        >
+          备份管理
+        </Button>
       </span>
     );
     const t2 = (

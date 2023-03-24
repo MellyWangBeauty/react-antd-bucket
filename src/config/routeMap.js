@@ -33,6 +33,10 @@ const SpaceSet = Loadable({
     import(/*webpackChunkName:'SpaceSet'*/ "@/views/bucket/overflow/spaceMsg"),
   loading: Loading,
 });
+const BackUp = Loadable({
+  loader: () => import("@/views/bucket/overflow/backUp"),
+  loading: Loading,
+});
 const Auth = Loadable({
   loader: () =>
     import(/*webpackChunkName:'Auth'*/ "@/views/bucket/overflow/spaceMsg/auth"),
@@ -63,6 +67,7 @@ export default [
   { path: "/spaceOverflow", component: SpaceOverflow, roles: ["user"] },
   { path: "/fileMsg", component: FileMsg, roles: ["user"] },
   { path: "/spaceSet", component: SpaceSet, roles: ["user"] },
+  { path: "/backUp", component: BackUp, roles: ["admin", "user", "guest"] },
   { path: "/auth", component: Auth, roles: ["user"] },
   { path: "/tag", component: Tag, roles: ["user"] },
   { path: "/person", component: Person, roles: ["user"] },

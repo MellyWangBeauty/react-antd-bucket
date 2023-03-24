@@ -202,9 +202,14 @@ const menuList = [
           {
             title: "空间授权",
             path: "/tag",
-            roles: ["admin"],
+            roles: ["admin", "user"],
           },
         ],
+      },
+      {
+        title: "备份管理",
+        path: "/backUp",
+        roles: ["admin"],
       },
     ],
   },
