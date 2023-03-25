@@ -66,12 +66,6 @@ class User extends Component {
       uploadFile: true,
     });
   };
-  changeTab = (v) => {
-    // console.log('v', v);
-    // this.setState({
-    //   tabValue: v
-    // })
-  };
   handleUploadOk = (_) => {
     this.setState({
       uploadFile: false,
@@ -200,9 +194,6 @@ class User extends Component {
       bucket: _obj,
       bucketId: _obj.bucketId,
     });
-    // this.setState({
-    //     bucketId: this.props.location.query.id
-    // })
     this.getFiles(_obj);
   }
 

@@ -1,11 +1,5 @@
 import React, { Component } from "react";
 import { Button, Card, Dropdown, Icon, Menu, message, Table } from "antd";
-import {
-  bucketFile,
-  bucketFileDelete,
-  bucketFileDownload,
-  bucketFileBackup,
-} from "@/api/bucket";
 import { backUpFile, backUpFileDelete, backUpFileResume } from "@/api/backup";
 import { getParams } from "@/utils";
 
@@ -13,7 +7,7 @@ const { Column } = Table;
 
 class User extends Component {
   state = {
-    files: [],
+    backupFiles: [],
     bucket: {},
     dir: "/",
     bucketId: 12,
@@ -36,7 +30,7 @@ class User extends Component {
         const { code, data } = result;
         if (code === 0) {
           this.setState({
-            files: data,
+            backupFiles: data,
           });
         }
       })
@@ -72,7 +66,6 @@ class User extends Component {
         if (code === 0) {
           message.success("删除成功");
           this.handleUploadOk();
-          console.log(data);
         }
       })
       .catch((err) => {
@@ -90,9 +83,8 @@ class User extends Component {
       .then((result) => {
         const { code, data } = result;
         if (code === 0) {
-          message.success("删除成功");
+          message.success("恢复备份成功");
           this.handleUploadOk();
-          console.log(data);
         }
       })
       .catch((err) => {
@@ -123,14 +115,11 @@ class User extends Component {
       bucket: _obj,
       bucketId: _obj.bucketId,
     });
-    // this.setState({
-    //     bucketId: this.props.location.query.id
-    // })
     this.getFiles(_obj);
   }
 
   render() {
-    const { files, selectedRowKeys } = this.state;
+    const { backupFiles, selectedRowKeys } = this.state;
     const title = (
       <span>
         <Button
@@ -176,8 +165,8 @@ class User extends Component {
           <div>
             <Table
               bordered
-              rowKey="objectName"
-              dataSource={files}
+              rowKey="fileName"
+              dataSource={backupFiles}
               pagination={false}
             >
               <Column
@@ -191,7 +180,7 @@ class User extends Component {
               />
               <Column
                 title="名称"
-                dataIndex="objectName"
+                dataIndex="fileName"
                 key="objectName"
                 align="center"
               />
@@ -221,14 +210,14 @@ class User extends Component {
                     <Menu>
                       <Menu.Item
                         onClick={(eve) => {
-                          this.backUpFileResume(row.objectName);
+                          this.backUpFileResume(row.fileName);
                         }}
                       >
                         恢复
                       </Menu.Item>
                       <Menu.Item
                         onClick={(eve) => {
-                          this.backUpFileDelete(row.objectName);
+                          this.backUpFileDelete(row.fileName);
                         }}
                       >
                         删除
