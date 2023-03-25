@@ -1,5 +1,14 @@
 import React, { Component } from "react";
 import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import {
   Card,
   Button,
   Table,
@@ -10,44 +19,38 @@ import {
   Space,
   Menu,
   Icon,
+  DatePicker,
 } from "antd";
+import ECharts from "./echarts";
 import { Redirect, Link } from "react-router-dom";
 import { bucketStatistics } from "@/api/bucket";
 import { getParams, getNowMonthFirst, getNowMonthLast } from "@/utils";
 
 const { Column } = Table;
+const { RangePicker } = DatePicker;
 
 class BucketDetail extends Component {
   state = {
     bucket: {},
     bucketId: 0,
     statistics: [],
+    from: {},
+    to: {},
   };
   /**
    * 获取令桶牌详情
    * @returns {Promise<void>}
    */
-  getStatisticsData = async (obj) => {
-    let fromArr = getNowMonthFirst().split("-");
-    let toArr = getNowMonthLast().split("-");
-    let from = {
-      day: fromArr[2],
-      month: fromArr[1],
-      year: fromArr[0],
-    };
-    let to = {
-      day: toArr[2],
-      month: toArr[1],
-      year: toArr[0],
-    };
+  getStatisticsData = async () => {
     const result = await bucketStatistics({
-      bucketId: obj.bucketId,
-      bucketName: obj.bucketName,
-      from: from,
-      to: to,
+      bucketId: this.state.bucketId,
+      bucketName: this.state.bucket.bucketName,
+      from: this.state.from,
+      to: this.state.to,
     });
     const { data, code } = result;
     if (code === 0) {
+      console.log("statistics", data);
       this.setState({
         statistics: data,
       });
@@ -64,7 +67,19 @@ class BucketDetail extends Component {
       bucketId: _obj.bucketId,
     });
     console.log(this.props.location.search);
-    this.getStatisticsData(_obj);
+    let fromArr = getNowMonthFirst().split("-");
+    let toArr = getNowMonthLast().split("-");
+    let from = {
+      day: fromArr[2],
+      month: fromArr[1],
+      year: fromArr[0],
+    };
+    let to = {
+      day: toArr[2],
+      month: toArr[1],
+      year: toArr[0],
+    };
+    this.setState({ from, to }, () => this.getStatisticsData());
   }
 
   handleGoPage = (url) => {
@@ -77,6 +92,24 @@ class BucketDetail extends Component {
         row.bucketName +
         "&authority=" +
         row.authority
+    );
+  };
+
+  onDateChange = (date, dateString) => {
+    let fromArr = dateString[0].split("-");
+    let toArr = dateString[1].split("-");
+    let from = {
+      day: fromArr[2],
+      month: fromArr[1],
+      year: fromArr[0],
+    };
+    let to = {
+      day: toArr[2],
+      month: toArr[1],
+      year: toArr[0],
+    };
+    this.setState({ from, to }, () =>
+      this.getStatisticsData(this.state.bucket)
     );
   };
 
@@ -116,6 +149,32 @@ class BucketDetail extends Component {
       <div className="app-container">
         <br />
         <Card title={title}>
+          <Card>
+            <span>请选择需要查看的起止时间：</span>
+            <RangePicker onChange={this.onDateChange} />
+            <AreaChart
+              width={1300}
+              height={400}
+              data={this.state.statistics}
+              margin={{
+                top: 20,
+                right: 20,
+                left: 20,
+                bottom: 0,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="day" />
+              <YAxis />
+              <Tooltip />
+              <Area
+                type="monotone"
+                dataKey="memoryCapacity"
+                stroke="#8884d8"
+                fill="#8884d8"
+              />
+            </AreaChart>
+          </Card>
           {/*<div>*/}
           {/*    <Descriptions column={4}>*/}
           {/*        <Descriptions.Item label="存储量">11.86KB </Descriptions.Item>*/}
