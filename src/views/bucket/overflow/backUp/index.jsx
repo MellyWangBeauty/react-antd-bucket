@@ -20,6 +20,7 @@ class User extends Component {
     tabValue: 1,
     selectedRowKeys: [],
   };
+
   getFiles = async (obj) => {
     backUpFile({
       bucketId: obj.bucketId,
@@ -38,11 +39,13 @@ class User extends Component {
         console.log(err);
       });
   };
+
   uploadFile = (row) => {
     this.setState({
       uploadFile: true,
     });
   };
+
   handleUploadOk = (_) => {
     this.setState({
       uploadFile: false,
@@ -50,6 +53,7 @@ class User extends Component {
     });
     this.getFiles(this.state.bucket);
   };
+
   /**
    * 删除文件
    * @param fileName
@@ -151,21 +155,14 @@ class User extends Component {
       </span>
     );
 
-    const rowSelection = {
-      onChange: (newSelectedRowKeys) => {
-        console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-      },
-    };
     return (
       <div className="app-container">
-        {/* <TypingCard title='用户管理' source={cardContent} /> */}
         <br />
-
         <Card title={title}>
           <div>
             <Table
               bordered
-              rowKey="fileName"
+              rowKey="objectName"
               dataSource={backupFiles}
               pagination={false}
             >
@@ -180,7 +177,7 @@ class User extends Component {
               />
               <Column
                 title="名称"
-                dataIndex="fileName"
+                dataIndex="objectName"
                 key="objectName"
                 align="center"
               />
@@ -210,14 +207,14 @@ class User extends Component {
                     <Menu>
                       <Menu.Item
                         onClick={(eve) => {
-                          this.backUpFileResume(row.fileName);
+                          this.backUpFileResume(row.objectName);
                         }}
                       >
                         恢复
                       </Menu.Item>
                       <Menu.Item
                         onClick={(eve) => {
-                          this.backUpFileDelete(row.fileName);
+                          this.backUpFileDelete(row.objectName);
                         }}
                       >
                         删除
