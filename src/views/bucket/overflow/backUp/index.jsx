@@ -121,6 +121,7 @@ class User extends Component {
     });
     this.getFiles(_obj);
   }
+  bucket;
 
   render() {
     const { backupFiles, selectedRowKeys } = this.state;

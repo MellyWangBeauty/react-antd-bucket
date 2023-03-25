@@ -37,6 +37,7 @@ class User extends Component {
     tabValue: 1,
     selectedRowKeys: [],
   };
+
   getFiles = async (obj) => {
     bucketFile({
       bucketId: obj.bucketId,
@@ -46,6 +47,27 @@ class User extends Component {
       .then((result) => {
         const { code, data } = result;
         if (code === 0) {
+          this.setState({
+            files: data,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  getDirFiles = async (obj) => {
+    let { bucket } = this.state;
+    bucketFile({
+      bucketId: bucket.bucketId,
+      bucketName: bucket.bucketName,
+      path: "/" + obj.objectName,
+    })
+      .then((result) => {
+        const { code, data } = result;
+        if (code === 0) {
+          console.log("data", data);
           this.setState({
             files: data,
           });
@@ -175,17 +197,32 @@ class User extends Component {
    * @param url
    * @param row
    */
-  handleGoPage = (url) => {
+  handleGoPage = (url, text) => {
     let row = this.state.bucket;
-    this.props.history.push(
-      url +
-        "?bucketId=" +
-        row.bucketId +
-        "&bucketName=" +
-        row.bucketName +
-        "&authority=" +
-        row.authority
-    );
+    const { objectName, dir } = text;
+    if (dir) {
+      this.props.history.push(
+        url +
+          "?bucketId=" +
+          row.bucketId +
+          "&bucketName=" +
+          row.bucketName +
+          "&authority=" +
+          row.authority +
+          "&objectName=" +
+          objectName
+      );
+    } else {
+      this.props.history.push(
+        url +
+          "?bucketId=" +
+          row.bucketId +
+          "&bucketName=" +
+          row.bucketName +
+          "&authority=" +
+          row.authority
+      );
+    }
   };
 
   componentDidMount() {
@@ -316,6 +353,13 @@ class User extends Component {
                     if (row.dir) {
                       menu = (
                         <Menu>
+                          <Menu.Item
+                            onClick={(eve) => {
+                              this.getDirFiles(text);
+                            }}
+                          >
+                            进入
+                          </Menu.Item>
                           <Menu.Item
                             onClick={(eve) => {
                               this.bucketFileDelete(row.objectName);
