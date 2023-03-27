@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect,Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { Form, Icon, Input, Button, message, Spin } from "antd";
 import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
@@ -39,21 +39,23 @@ const Login = (props) => {
     event.preventDefault();
 
     // 对所有表单字段进行检验
-    form.validateFields((err, values) => {
-      // 检验成功
-      if (!err) {
-        const { username, password } = values;
-        handleLogin(username, password);
-      } else {
-        console.log("检验失败!");
-      }
-    }).catch((errorInfo) => {
-      console.log('errorInfo',errorInfo);
-    });
+    form
+      .validateFields((err, values) => {
+        // 检验成功
+        if (!err) {
+          const { username, password } = values;
+          handleLogin(username, password);
+        } else {
+          console.log("检验失败!");
+        }
+      })
+      .catch((errorInfo) => {
+        console.log("errorInfo", errorInfo);
+      });
   };
 
   if (token) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/bucket" />;
   }
   return (
     <DocumentTitle title={"登录"}>
@@ -73,11 +75,7 @@ const Login = (props) => {
                   },
                 ],
                 initialValue: "admin", // 初始值
-              })(
-                <Input
-                  placeholder="邮箱"
-                />
-              )}
+              })(<Input placeholder="邮箱" />)}
             </Form.Item>
             <Form.Item label="密码">
               {getFieldDecorator("password", {
@@ -89,12 +87,7 @@ const Login = (props) => {
                   },
                 ],
                 initialValue: "12345678", // 初始值
-              })(
-                <Input
-                  type="password"
-                  placeholder="密码"
-                />
-              )}
+              })(<Input type="password" placeholder="密码" />)}
             </Form.Item>
             <Form.Item>
               <Button
@@ -106,12 +99,9 @@ const Login = (props) => {
               </Button>
             </Form.Item>
             <Form.Item>
-              <Button
-                  type="link"
-                  className="login-form-button"
-                >
-                  <Link to="/register">立即注册 · 忘记密码</Link>
-                </Button>
+              <Button type="link" className="login-form-button">
+                <Link to="/register">立即注册 · 忘记密码</Link>
+              </Button>
             </Form.Item>
             {/* <Form.Item>
               <span>账号 : admin 密码 : 随便填</span>
