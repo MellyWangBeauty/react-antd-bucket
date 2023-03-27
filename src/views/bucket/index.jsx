@@ -24,32 +24,32 @@ class User extends Component {
     addUserModalLoading: false,
   };
   bucketQuery = async () => {
-    let typeName, authorityName;
     const result = await bucketQuery();
     const bucket = result.data;
-    bucket.map((buc, id) => {
-      const { type, authority } = buc;
-      switch (type) {
-        case 0:
-          typeName = "自有空间";
-          break;
-        case 1:
-          typeName = "授权只读";
-          break;
-        case 2:
-          typeName = "授权读写";
-          break;
-      }
-      switch (authority) {
-        case 0:
-          authorityName = "公开";
-          break;
-        case 1:
-          authorityName = "私有";
-          break;
-      }
-      bucket[id] = { ...buc, type: typeName, authority: authorityName };
-    });
+    // let typeName, authorityName;
+    // bucket.map((buc, id) => {
+    //   const { type, authority } = buc;
+    //   switch (type) {
+    //     case 0:
+    //       typeName = "自有空间";
+    //       break;
+    //     case 1:
+    //       typeName = "授权只读";
+    //       break;
+    //     case 2:
+    //       typeName = "授权读写";
+    //       break;
+    //   }
+    //   switch (authority) {
+    //     case 0:
+    //       authorityName = "公开";
+    //       break;
+    //     case 1:
+    //       authorityName = "私有";
+    //       break;
+    //   }
+    //   bucket[id] = { ...buc, type: typeName, authority: authorityName };
+    // });
     this.setState({
       bucket,
     });
@@ -228,12 +228,19 @@ class User extends Component {
               dataIndex="type"
               key="type"
               align="center"
+              render={(type, record, index) => {
+                let _typeMap = ["自由空间", "授权只读", "授权读写"];
+                return _typeMap[type];
+              }}
             />
             <Column
               title="访问控制"
               dataIndex="authority"
               key="authority"
               align="center"
+              render={(authority, record, index) => {
+                return authority === 1 ? "公开" : "私有";
+              }}
             />
             <Column
               title="创建时间"

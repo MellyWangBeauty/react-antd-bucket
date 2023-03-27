@@ -175,7 +175,7 @@ class BucketDetail extends Component {
               />
             </AreaChart>
           </Card>
-          {/*<div>*/}
+          {/* <div>*/}
           {/*    <Descriptions column={4}>*/}
           {/*        <Descriptions.Item label="存储量">11.86KB </Descriptions.Item>*/}
           {/*        <Descriptions.Item label="对象数">1810000000</Descriptions.Item>*/}
@@ -191,7 +191,7 @@ class BucketDetail extends Component {
           {/*        <Descriptions.Item label="昨日文件数">1810000000</Descriptions.Item>*/}
           {/*        <Descriptions.Item label="上月API请求次数(GET/PUT)">0/1 </Descriptions.Item>*/}
           {/*    </Descriptions>*/}
-          {/*</div>*/}
+          {/*</div> */}
 
           <Table
             bordered
