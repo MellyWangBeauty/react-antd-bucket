@@ -5,7 +5,11 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  BarChart,
+  Bar,
+  Cell,
   Tooltip,
+  Legend,
   ResponsiveContainer,
 } from "recharts";
 import {
@@ -20,6 +24,9 @@ import {
   Menu,
   Icon,
   DatePicker,
+  Select,
+  Row,
+  Col,
 } from "antd";
 import ECharts from "./echarts";
 import { Redirect, Link } from "react-router-dom";
@@ -28,6 +35,7 @@ import { getParams, getNowMonthFirst, getNowMonthLast } from "@/utils";
 
 const { Column } = Table;
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 
 class BucketDetail extends Component {
   state = {
@@ -36,6 +44,12 @@ class BucketDetail extends Component {
     statistics: [],
     from: {},
     to: {},
+    selectedType: "memoryCapacity",
+  };
+
+  handleChange = (value) => {
+    console.log(`selected ${value}`);
+    this.setState({ selectedType: value });
   };
   /**
    * 获取令桶牌详情
@@ -150,30 +164,62 @@ class BucketDetail extends Component {
         <br />
         <Card title={title}>
           <Card>
-            <span>请选择需要查看的起止时间：</span>
-            <RangePicker onChange={this.onDateChange} />
-            <AreaChart
-              width={1300}
-              height={400}
-              data={this.state.statistics}
-              margin={{
-                top: 20,
-                right: 20,
-                left: 20,
-                bottom: 0,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="memoryCapacity"
-                stroke="#8884d8"
-                fill="#8884d8"
-              />
-            </AreaChart>
+            <Row>
+              <Col span={12} offset={2}>
+                <span>
+                  请选择需要查看的起止时间：{" "}
+                  <RangePicker onChange={this.onDateChange} />
+                </span>
+              </Col>
+              <Col span={6} offset={1}>
+                <span>
+                  请选择需要查看的数据类型：
+                  <Select
+                    defaultValue="memoryCapacity"
+                    style={{ width: 150 }}
+                    onChange={this.handleChange}
+                  >
+                    <Option value="memoryCapacity">空间容量</Option>
+                    <Option value="getPutNum">上传/获取次数</Option>
+                  </Select>
+                </span>
+              </Col>
+            </Row>
+
+            {this.state.selectedType === "memoryCapacity" ? (
+              <AreaChart
+                width={1300}
+                height={400}
+                data={this.state.statistics}
+                margin={{
+                  top: 20,
+                  right: 20,
+                  left: 20,
+                  bottom: 0,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis />
+                <Tooltip />
+                <Area
+                  type="monotone"
+                  dataKey="memoryCapacity"
+                  stroke="#8884d8"
+                  fill="#8884d8"
+                />
+              </AreaChart>
+            ) : (
+              <BarChart width={1300} height={400} data={this.state.statistics}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="putNum" fill="#8884d8" />
+                <Bar dataKey="getNum" fill="#82ca9d" />
+              </BarChart>
+            )}
           </Card>
           {/* <div>*/}
           {/*    <Descriptions column={4}>*/}
@@ -193,7 +239,7 @@ class BucketDetail extends Component {
           {/*    </Descriptions>*/}
           {/*</div> */}
 
-          <Table
+          {/* <Table
             bordered
             rowKey="id"
             dataSource={statistics}
@@ -227,7 +273,7 @@ class BucketDetail extends Component {
             <Column title="年" dataIndex="year" key="year" align="center" />
             <Column title="月" dataIndex="month" key="month" align="center" />
             <Column title="日" dataIndex="day" key="day" align="center" />
-          </Table>
+          </Table> */}
         </Card>
       </div>
     );
