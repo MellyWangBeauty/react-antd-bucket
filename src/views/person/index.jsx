@@ -242,7 +242,7 @@ class User extends Component {
     const { id } = this.state.users;
     const result = await getMyGd({
       currentPage: 0,
-      pageSize: 5,
+      pageSize: 100,
       userId: id,
     });
     const { data, code } = result;
