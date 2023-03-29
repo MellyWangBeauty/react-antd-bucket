@@ -301,8 +301,8 @@ class User extends Component {
         <Card title={title}>
           <div>
             <Descriptions column={4}>
-              <Descriptions.Item label="标准存储">
-                共1个文件 共11.86KB存储量
+              <Descriptions.Item label="文件概览">
+                共{files.length}个文件(目录)
               </Descriptions.Item>
             </Descriptions>
 

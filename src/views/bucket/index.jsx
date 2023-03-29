@@ -1,5 +1,16 @@
 import React, { Component } from "react";
-import { Card, Button, Table, message, Divider, Modal } from "antd";
+import {
+  Card,
+  Button,
+  Table,
+  message,
+  Divider,
+  Modal,
+  Collapse,
+  Form,
+  Select,
+  Input,
+} from "antd";
 import {
   bucketAdd,
   bucketQuery,
@@ -13,6 +24,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 
 const { confirm } = Modal;
 const { Column } = Table;
+const { Panel } = Collapse;
 
 class User extends Component {
   state = {
@@ -216,6 +228,45 @@ class User extends Component {
         {/* <TypingCard title='用户管理' source={cardContent} /> */}
         <br />
         <Card title={title}>
+          <Collapse defaultActiveKey={["1"]}>
+            <Panel header="筛选" key="1">
+              <Form layout="inline">
+                <Form.Item label="空间名称:">
+                  <Input onChange={this.filterBucketNameChange} />
+                </Form.Item>
+                <Form.Item label="空间类型:">
+                  <Select
+                    style={{ width: 120 }}
+                    onChange={this.filterTypeChange}
+                  >
+                    <Select.Option value={0}>自有空间</Select.Option>
+                    <Select.Option value={1}>授权只读</Select.Option>
+                    <Select.Option value={2}>授权读写</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item label="访问控制:">
+                  <Select
+                    style={{ width: 120 }}
+                    onChange={this.filterAuthorityChange}
+                  >
+                    <Select.Option value={0}>公开</Select.Option>
+                    <Select.Option value={1}>私有</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    icon="search"
+                    // onClick={this.bucketFilter(this.state.listQuery)}
+                    onClick={this.bucketQuery}
+                  >
+                    搜索
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Panel>
+          </Collapse>
+          <br />
           <Table bordered rowKey="id" dataSource={bucket} pagination={false}>
             <Column
               title="空间名称"

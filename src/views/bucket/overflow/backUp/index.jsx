@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Button, Card, Dropdown, Icon, Menu, message, Table } from "antd";
+import {
+  Button,
+  Card,
+  Dropdown,
+  Icon,
+  Menu,
+  message,
+  Table,
+  Descriptions,
+} from "antd";
 import { backUpFile, backUpFileDelete, backUpFileResume } from "@/api/backup";
 import { getParams } from "@/utils";
 
@@ -161,6 +170,11 @@ class User extends Component {
         <br />
         <Card title={title}>
           <div>
+            <Descriptions column={4}>
+              <Descriptions.Item label="备份概览">
+                共{backupFiles.length}个文件(目录)
+              </Descriptions.Item>
+            </Descriptions>
             <Table
               bordered
               rowKey="objectName"
