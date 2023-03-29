@@ -19,6 +19,7 @@
     "driver.js": "^0.9.8",
     "echarts": "^4.9.0",
     "file-saver": "^2.0.2",
+    "github-markdown-css": "^5.2.0",
     "jquery": "^3.6.4",
     "js-cookie": "^2.2.1",
     "jszip": "^3.4.0",
