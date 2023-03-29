@@ -65,17 +65,17 @@ const Login = (props) => {
             <h2>登录</h2>
           </div>
           <Spin spinning={loading} tip="登录中...">
-            <Form.Item label="邮箱">
+            <Form.Item label="用户名">
               {getFieldDecorator("username", {
                 rules: [
                   {
                     required: true,
                     whitespace: true,
-                    message: "请输入邮箱",
+                    message: "请输入用户名",
                   },
                 ],
                 initialValue: "admin", // 初始值
-              })(<Input placeholder="邮箱" />)}
+              })(<Input placeholder="用户名" />)}
             </Form.Item>
             <Form.Item label="密码">
               {getFieldDecorator("password", {
@@ -100,7 +100,7 @@ const Login = (props) => {
             </Form.Item>
             <Form.Item>
               <Button type="link" className="login-form-button">
-                <Link to="/register">立即注册 · 忘记密码</Link>
+                <Link to="/register">点击立即注册</Link>
               </Button>
             </Form.Item>
             {/* <Form.Item>

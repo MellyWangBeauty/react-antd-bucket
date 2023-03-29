@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button, Table, Modal, Form, Upload } from "antd";
+import { Card, Button, Table, Modal, Form, Upload, message } from "antd";
 import SparkMD5 from "spark-md5";
 import $ from "jquery";
 import { getToken } from "@/utils/auth";
@@ -251,6 +251,7 @@ class AddUserForm extends Component {
     const handleOnOk = () => {
       this.uploadFiles();
       onOk();
+      message.success("上传文件成功！");
     };
     const t2 = (
       <span>

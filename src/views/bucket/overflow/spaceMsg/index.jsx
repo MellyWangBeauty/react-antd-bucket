@@ -87,17 +87,17 @@ class User extends Component {
           文件管理
         </Button>
         <Button
-          type="primary"
-          onClick={this.handleGoPage.bind(this, "/spaceSet")}
-        >
-          空间设置
-        </Button>
-        <Button
-          style={{ marginRight: 20 + "px", marginLeft: 20 + "px" }}
+          style={{ marginRight: 20 + "px" }}
           type="primary"
           onClick={this.handleGoPage.bind(this, "/backUp")}
         >
           备份管理
+        </Button>
+        <Button
+          type="primary"
+          onClick={this.handleGoPage.bind(this, "/spaceSet")}
+        >
+          空间设置
         </Button>
       </span>
     );

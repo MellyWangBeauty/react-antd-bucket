@@ -144,14 +144,11 @@ class User extends Component {
         >
           <Link to="/fileMsg">文件管理</Link>
         </Button>
+        <Button type="primary" style={{ marginRight: 20 + "px" }}>
+          <Link to="/backUp">备份管理</Link>
+        </Button>
         <Button type="primary">
           <Link to="/spaceSet">空间设置</Link>
-        </Button>
-        <Button
-          type="primary"
-          style={{ marginRight: 20 + "px", marginLeft: 20 + "px" }}
-        >
-          <Link to="/backUp">备份管理</Link>
         </Button>
       </span>
     );
