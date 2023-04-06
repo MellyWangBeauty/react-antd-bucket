@@ -1,10 +1,22 @@
 import React, { Component } from "react";
-import { Card, Button, Table, Modal, Form, Upload, message } from "antd";
+import {
+  Card,
+  Button,
+  Table,
+  Modal,
+  Form,
+  Upload,
+  message,
+  Dropdown,
+  Menu,
+  Icon,
+} from "antd";
 import SparkMD5 from "spark-md5";
 import $ from "jquery";
 import { getToken } from "@/utils/auth";
 import { getParams } from "@/utils";
 import request from "@/utils/request";
+import ReactEazyCrop from "./ReactEazyCrop";
 
 const { Column } = Table;
 //分片大小 5m
@@ -15,6 +27,7 @@ class AddUserForm extends Component {
     fileList: [],
     uploadFile: false,
     uploading: false,
+    imageCrop: false,
   };
   // const uploadFileEle = document.querySelector("#uploadFile");
 
@@ -223,6 +236,10 @@ class AddUserForm extends Component {
     });
   };
 
+  handleCancel = () => {
+    this.setState({ imageCrop: false });
+  };
+
   render() {
     const { visible, onCancel, onOk, form, confirmLoading } = this.props;
     const { getFieldDecorator } = form;
@@ -277,25 +294,74 @@ class AddUserForm extends Component {
       </span>
     );
     return (
-      <Modal
-        title="上传文件"
-        visible={visible}
-        onCancel={onCancel}
-        onOk={handleOnOk}
-        confirmLoading={confirmLoading}
-      >
-        {t2}
-        {/* <Card title={t2}> */}
-        {/* <Table bordered rowKey="name" dataSource={fileList} pagination={false}>
-                        <Column title="文件名" dataIndex="name" key="name" align="center"/>
-                        <Column title="文件大小" dataIndex="size" key="size" align="center"/>
-                        <Column title="操作" key="action" width={150} align="center" render={(text, row) => (
-                            <Button type='primary' style={{marginRight: 10 + 'px'}}
-                                    onClick={UploadProps.onRemove.bind(this, row)}>移除</Button>
-                        )}/>
-                    </Table> */}
-        {/* </Card> */}
-      </Modal>
+      <>
+        <Modal
+          title="上传文件"
+          visible={visible}
+          onCancel={onCancel}
+          onOk={handleOnOk}
+          confirmLoading={confirmLoading}
+        >
+          {/* {t2} */}
+          <Card title={t2}>
+            <Table
+              bordered
+              rowKey="name"
+              dataSource={fileList}
+              pagination={false}
+            >
+              <Column
+                title="文件名"
+                dataIndex="name"
+                key="name"
+                align="center"
+              />
+              <Column
+                title="文件大小"
+                dataIndex="size"
+                key="size"
+                align="center"
+              />
+              <Column
+                title="操作"
+                key="action"
+                width={150}
+                align="center"
+                render={(text, row) => (
+                  <Dropdown
+                    overlay={
+                      <Menu>
+                        <Menu.Item
+                          onClick={() => {
+                            this.setState({ imageCrop: true });
+                          }}
+                        >
+                          编辑
+                        </Menu.Item>
+                        <Menu.Item
+                          onClick={UploadProps.onRemove.bind(this, row)}
+                        >
+                          删除
+                        </Menu.Item>
+                      </Menu>
+                    }
+                  >
+                    <a onClick={(event) => event.stopPropagation()}>
+                      更多
+                      <Icon type="down" />
+                    </a>
+                  </Dropdown>
+                )}
+              />
+            </Table>
+          </Card>
+        </Modal>
+        <ReactEazyCrop
+          visible={this.state.imageCrop}
+          onCancel={this.handleCancel}
+          onOk={this.handleCancel}
+        />
+      </>
     );
   }
 }

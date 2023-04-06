@@ -107,7 +107,7 @@ const Login = (props) => {
                     message: "请输入用户名",
                   },
                 ],
-                initialValue: "admin", // 初始值
+                // 初始值
               })(<Input placeholder="用户名" />)}
             </Form.Item>
             <Form.Item label="邮箱">
@@ -119,7 +119,7 @@ const Login = (props) => {
                     message: "请输入邮箱",
                   },
                 ],
-                initialValue: "1047215763@qq.com", // 初始值
+                // 初始值
               })(<Input placeholder="邮箱" />)}
             </Form.Item>
             <Form.Item label="验证码">
@@ -142,7 +142,7 @@ const Login = (props) => {
                     message: "请输入密码",
                   },
                 ],
-                initialValue: "12345678", // 初始值
+                // 初始值
               })(<Input type="userPassword" placeholder="密码" />)}
             </Form.Item>
             <Form.Item label="确认密码">
@@ -154,7 +154,7 @@ const Login = (props) => {
                     message: "请输入确认密码",
                   },
                 ],
-                initialValue: "12345678", // 初始值
+                // 初始值
               })(<Input type="checkPassword" placeholder="密码" />)}
             </Form.Item>
             <Form.Item>
