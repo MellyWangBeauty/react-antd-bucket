@@ -10,7 +10,10 @@ import {
   Dropdown,
   Menu,
   Icon,
+  Row,
+  Col,
 } from "antd";
+import ImgCrop from "antd-img-crop";
 import SparkMD5 from "spark-md5";
 import $ from "jquery";
 import { getToken } from "@/utils/auth";
@@ -90,6 +93,7 @@ class AddUserForm extends Component {
           file.contentType,
           fileMd5
         );
+        console.log("fileMd5", fileMd5);
         return;
       }
       //
@@ -115,6 +119,7 @@ class AddUserForm extends Component {
           //取文件指定范围内的byte，从而得到分片数据
           // debugger
           let _chunkFile = file.slice(start, end);
+
           console.log("开始上传第" + item.partNumber + "个分片");
 
           // await request({
@@ -198,6 +203,7 @@ class AddUserForm extends Component {
       data: composeParams,
       success: function (res) {
         console.log("合并文件完成", res.data);
+        console.log("composeParams", composeParams);
       },
     });
   };
@@ -264,6 +270,7 @@ class AddUserForm extends Component {
         return false;
       },
       fileList,
+      showUploadList: false,
     };
     const handleOnOk = () => {
       this.uploadFiles();
@@ -272,9 +279,21 @@ class AddUserForm extends Component {
     };
     const t2 = (
       <span>
-        <Upload name="loGo" listType="picture" {...UploadProps}>
-          <Button type="default">选择文件</Button>
-        </Upload>
+        <Row>
+          <Col span={6}>
+            <Upload {...UploadProps}>
+              <Button type="default">选择文件</Button>
+            </Upload>
+          </Col>
+          <Col span={12}>
+            <ImgCrop>
+              <Upload {...UploadProps}>
+                <Button type="default">选择图片并裁剪</Button>
+              </Upload>
+            </ImgCrop>
+          </Col>
+        </Row>
+
         <Button
           loading={uploading}
           style={{ marginTop: 20 + "px" }}
@@ -302,7 +321,6 @@ class AddUserForm extends Component {
           onOk={handleOnOk}
           confirmLoading={confirmLoading}
         >
-          {/* {t2} */}
           <Card title={t2}>
             <Table
               bordered
@@ -328,29 +346,12 @@ class AddUserForm extends Component {
                 width={150}
                 align="center"
                 render={(text, row) => (
-                  <Dropdown
-                    overlay={
-                      <Menu>
-                        <Menu.Item
-                          onClick={() => {
-                            this.setState({ imageCrop: true });
-                          }}
-                        >
-                          编辑
-                        </Menu.Item>
-                        <Menu.Item
-                          onClick={UploadProps.onRemove.bind(this, row)}
-                        >
-                          删除
-                        </Menu.Item>
-                      </Menu>
-                    }
+                  <Button
+                    type="danger"
+                    onClick={UploadProps.onRemove.bind(this, row)}
                   >
-                    <a onClick={(event) => event.stopPropagation()}>
-                      更多
-                      <Icon type="down" />
-                    </a>
-                  </Dropdown>
+                    删除
+                  </Button>
                 )}
               />
             </Table>
