@@ -5,6 +5,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@ffmpeg/core": "^0.8.5",
+    "@ffmpeg/ffmpeg": "^0.9.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -93,7 +95,10 @@
     "mockjs": "^1.1.0",
     "raw-loader": "^4.0.2",
     "react-app-rewired": "^2.1.5",
-    "user-agent": "^1.0.4"
+    "user-agent": "^1.0.4",
+    "http-proxy-middleware": "^2.0.6",
+    "node-sass": "^8.0.0",
+    "sass-loader": "^13.2.0"
   },
   "config": {
     "commitizen": {

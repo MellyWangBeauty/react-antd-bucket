@@ -212,7 +212,7 @@ class BucketDetail extends Component {
             ) : (
               <BarChart width={1300} height={400} data={this.state.statistics}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" />
+                <XAxis dataKey="dayx" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
