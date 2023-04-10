@@ -17,7 +17,7 @@ const getPageTitle = (menuList, pathname) => {
   }
   return title;
 };
-console.log('routeList',routeList);
+console.log("routeList", routeList);
 
 const LayoutContent = (props) => {
   const { role, location } = props;
@@ -37,7 +37,7 @@ const LayoutContent = (props) => {
             exit={false}
           >
             <Switch location={location}>
-              <Redirect exact from="/" to="/dashboard" />
+              <Redirect exact from="/" to="/bucket" />
               {routeList.map((route) => {
                 return (
                   handleFilter(route) && (
@@ -47,13 +47,12 @@ const LayoutContent = (props) => {
                       path={route.path}
                     />
                   )
-                   
+
                   // <Route
                   //   component={route.component}
                   //   key={route.path}
                   //   path={route.path}
                   // />
-                  
                 );
               })}
               <Redirect to="/error/404" />
