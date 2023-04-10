@@ -12,7 +12,9 @@ process.env.CI = "false";
 const addCustomize = () => (config) => {
   if (config.output.publicPath) {
     config.output.publicPath =
-      process.env.NODE_ENV === "production" ? "/" : "/";
+      process.env.NODE_ENV === "production"
+        ? "/"
+        : "/";
   }
   if (config.resolve) {
     config.resolve.extensions.push(".jsx");

@@ -58,7 +58,7 @@ class UploadExcel extends Component {
         _this.readerData(e.file).then(() => {
           e.onSuccess();
         });
-      },
+      }
     };
   };
   readerData = (rawFile) => {

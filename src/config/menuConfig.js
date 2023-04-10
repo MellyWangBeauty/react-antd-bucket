@@ -3,12 +3,12 @@
  * roles:标明当前菜单项在何种角色下可以显示，如果不写此选项，表示该菜单项完全公开，在任何角色下都显示
  */
 const menuList = [
-  // {
-  //   title: "首页",
-  //   path: "/dashboard",
-  //   icon: "home",
-  //   roles: ["admin", "user", "guest"],
-  // },
+  {
+    title: "首页",
+    path: "/dashboard",
+    icon: "home",
+    roles:["admin","user","guest"]
+  },
   // {
   //   title: "首页",
   //   path: "/dashboard",
@@ -81,22 +81,22 @@ const menuList = [
   //   title: "图表",
   //   path: "/charts",
   //   icon: "area-chart",
-  //   roles:["admin","editor"],
+  //   roles:["admin","editor","user"],
   //   children: [
   //     {
   //       title: "键盘图表",
   //       path: "/charts/keyboard",
-  //       roles:["admin","editor"],
+  //       roles:["admin","editor","user"],
   //     },
   //     {
   //       title: "折线图",
   //       path: "/charts/line",
-  //       roles:["admin","editor"],
+  //       roles:["admin","editor","user"],
   //     },
   //     {
   //       title: "混合图表",
   //       path: "/charts/mix-chart",
-  //       roles:["admin","editor"],
+  //       roles:["admin","editor","user"],
   //     },
   //   ],
   // },
@@ -176,54 +176,43 @@ const menuList = [
     title: "对象存储",
     path: "/bucket",
     icon: "usergroup-add",
-    roles: ["admin", "user"],
-    showChild: true,
+    roles:["admin","user"],
+    showChild:true,
     children: [
       {
         title: "空间概览",
         path: "/spaceOverflow",
-        roles: ["admin", "user"],
+        roles:["admin","user"]
       },
       {
         title: "空间设置",
         path: "/spaceSet",
-        roles: ["admin"],
+        roles:["admin"]
       },
       {
         title: "文件设置",
         path: "/fileMsg",
-        roles: ["admin"],
+        roles:["admin"],
         children: [
           {
             title: "空间授权",
             path: "/auth",
-            roles: ["admin"],
+            roles:["admin"]
           },
           {
             title: "空间授权",
             path: "/tag",
-            roles: ["admin", "user"],
-          },
+            roles:["admin"]
+          }
         ],
-      },
-      {
-        title: "备份管理",
-        path: "/backUp",
-        roles: ["admin"],
-      },
+      }
     ],
-  },
-  {
-    title: "SDK文档",
-    path: "/sdk",
-    icon: "copy",
-    roles: ["admin", "user", "guest"],
   },
   {
     title: "个人中心",
     path: "/person",
     icon: "user",
-    roles: ["user"],
+    roles:["user"]
   },
   // {
   //   title: "关于作者",

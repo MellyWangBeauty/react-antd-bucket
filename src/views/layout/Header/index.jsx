@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Icon, Menu, Dropdown, Modal, Layout, Avatar } from "antd";
 import { Link } from "react-router-dom";
-import { reqUserInfo } from "@/api/user";
 import { logout, getUserInfo } from "@/store/actions";
 import FullScreen from "@/components/FullScreen";
 import Settings from "@/components/Settings";
@@ -20,9 +19,7 @@ const LayoutHeader = (props) => {
     getUserInfo,
     showSettings,
     fixedHeader,
-    name,
   } = props;
-
   token && getUserInfo(token);
   const handleLogout = (token) => {
     Modal.confirm({
@@ -96,15 +93,12 @@ const LayoutHeader = (props) => {
           {/* <FullScreen /> */}
           {/* {showSettings ? <Settings /> : null} */}
           <Link to="/person">
-            <Avatar
-              // shape="square"
-              size="medium"
-              style={{ backgroundColor: "#87d068" }}
-              icon="user"
-            />
-            <div className="dropdown-wrap">{name}</div>
+            <Avatar shape="square" size="medium" src={avatar} />
+            <div className="dropdown-wrap">
+                admin
+            </div>
           </Link>
-
+          
           {/* <div className="dropdown-wrap">
             <Dropdown overlay={menu}>
               <div>

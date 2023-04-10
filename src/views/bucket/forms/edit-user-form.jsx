@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import { Form, Input, Select, Modal, Radio } from "antd";
+import {Form, Input, Select, Modal, Radio} from "antd";
 const { TextArea } = Input;
 class EditUserForm extends Component {
   render() {
-    const { visible, onCancel, onOk, form, confirmLoading, currentRowData } =
-      this.props;
+    const {
+      visible,
+      onCancel,
+      onOk,
+      form,
+      confirmLoading,
+      currentRowData,
+    } = this.props;
     const { getFieldDecorator } = form;
     const { id, bucketName, authority } = currentRowData;
     const formItemLayout = {
@@ -24,24 +30,27 @@ class EditUserForm extends Component {
         confirmLoading={confirmLoading}
       >
         <Form {...formItemLayout}>
-          {getFieldDecorator("id", {
-            initialValue: id,
-          })(<Input hidden disabled />)}
-          <Form.Item label="空间名称:">
-            {getFieldDecorator("bucketName", {
-              // rules: [{ required: true, message: "请输入存储空间名称!" }],
-              initialValue: bucketName,
+          <Form.Item label="空间ID:">
+            {getFieldDecorator("id", {
+              initialValue: id,
             })(<Input disabled />)}
           </Form.Item>
+          <Form.Item label="空间名称:">
+            {getFieldDecorator("bucketName", {
+              rules: [{ required: true, message: "请输入存储空间名称!" }],
+              initialValue: bucketName,
+            })(<Input placeholder="请输入用户名称" />)}
+          </Form.Item>
 
-          <Form.Item label="访问控制:">
-            {getFieldDecorator("authority", {
+          <Form.Item label="访问控制:" >
+            {getFieldDecorator("authority",{
               initialValue: authority,
             })(
-              <Radio.Group>
-                <Radio value={1}>公开</Radio>
-                <Radio value={0}>私有</Radio>
-              </Radio.Group>
+                <Radio.Group
+                >
+                  <Radio value={1}>公开</Radio>
+                  <Radio value={0}>私有</Radio>
+                </Radio.Group>
             )}
           </Form.Item>
         </Form>
