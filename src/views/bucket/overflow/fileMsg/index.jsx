@@ -38,11 +38,11 @@ class User extends Component {
     selectedRowKeys: [],
   };
 
-  getFiles = async (obj) => {
+  getFiles = async (obj, path = "/") => {
     bucketFile({
       bucketId: obj.bucketId,
       bucketName: obj.bucketName,
-      path: "/",
+      path: path,
     })
       .then((result) => {
         const { code, data } = result;
@@ -57,26 +57,26 @@ class User extends Component {
       });
   };
 
-  getDirFiles = async (obj) => {
-    let { bucket } = this.state;
-    bucketFile({
-      bucketId: bucket.bucketId,
-      bucketName: bucket.bucketName,
-      path: "/" + obj.objectName,
-    })
-      .then((result) => {
-        const { code, data } = result;
-        if (code === 0) {
-          console.log("data", data);
-          this.setState({
-            files: data,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // getDirFiles = async (obj) => {
+  //   let { bucket } = this.state;
+  //   bucketFile({
+  //     bucketId: bucket.bucketId,
+  //     bucketName: bucket.bucketName,
+  //     path: "/" + obj.objectName,
+  //   })
+  //     .then((result) => {
+  //       const { code, data } = result;
+  //       if (code === 0) {
+  //         console.log("data", data);
+  //         this.setState({
+  //           files: data,
+  //         });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   handleCancel = (_) => {
     this.setState({
       uploadFile: false,
@@ -89,11 +89,12 @@ class User extends Component {
     });
   };
   handleUploadOk = (_) => {
+    let { bucket, dir } = this.state;
+    this.getFiles(bucket, dir);
     this.setState({
       uploadFile: false,
       addCatogery: false,
     });
-    this.getFiles(this.state.bucket);
   };
   createCatogery = () => {
     this.setState({
@@ -185,7 +186,6 @@ class User extends Component {
         if (code === 0) {
           message.success("删除成功");
           this.handleUploadOk();
-          console.log(data);
         }
       })
       .catch((err) => {
@@ -225,17 +225,30 @@ class User extends Component {
     }
   };
 
+  viewDirFiles = (dir) => {
+    this.setState({
+      dir: dir,
+    });
+    let { bucket } = this.state;
+    this.getFiles(bucket, dir);
+  };
+
+  handleBackPre = () => {
+    this.viewDirFiles("/");
+  };
+
   componentDidMount() {
+    let { pathname } = this.props.location;
     let _obj = getParams(this.props.location.search);
     this.setState({
       bucket: _obj,
       bucketId: _obj.bucketId,
     });
-    this.getFiles(_obj);
+    this.getFiles(_obj, "/");
   }
 
   render() {
-    const { files, selectedRowKeys } = this.state;
+    const { files, selectedRowKeys, dir } = this.state;
     const title = (
       <span>
         <Button
@@ -266,7 +279,16 @@ class User extends Component {
         </Button>
       </span>
     );
-    const t2 = (
+    let t3 = "";
+    let t2 = "";
+    if (dir !== "/") {
+      t3 = (
+        <Button type="primary" onClick={this.handleBackPre.bind(this)}>
+          返回根目录
+        </Button>
+      );
+    }
+    t2 = (
       <span>
         <Button type="primary" onClick={this.uploadFile.bind(null)}>
           上传文件
@@ -286,6 +308,7 @@ class User extends Component {
         >
           刷新
         </Button>
+        {t3}
       </span>
     );
     const rowSelection = {
@@ -355,7 +378,7 @@ class User extends Component {
                         <Menu>
                           <Menu.Item
                             onClick={(eve) => {
-                              this.getDirFiles(text);
+                              this.viewDirFiles(row.objectName);
                             }}
                           >
                             进入
@@ -442,7 +465,6 @@ class User extends Component {
           visible={this.state.addCatogery}
           bucket={this.state.bucket}
           dir={this.state.dir}
-          // confirmLoading={this.state.addUserModalLoading}
           onCancel={this.handleCancel}
           onOk={this.handleUploadOk}
         />

@@ -74,7 +74,7 @@ const Login = (props) => {
                     message: "请输入用户名",
                   },
                 ],
-                initialValue: "admin", // 初始值
+                // 初始值
               })(<Input placeholder="用户名" />)}
             </Form.Item>
             <Form.Item label="密码">
@@ -86,7 +86,7 @@ const Login = (props) => {
                     message: "请输入密码",
                   },
                 ],
-                initialValue: "12345678", // 初始值
+                // 初始值
               })(<Input type="password" placeholder="密码" />)}
             </Form.Item>
             <Form.Item>

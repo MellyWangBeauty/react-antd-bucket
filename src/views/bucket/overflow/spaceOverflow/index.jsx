@@ -44,7 +44,7 @@ class BucketDetail extends Component {
     statistics: [],
     from: {},
     to: {},
-    selectedType: "memoryCapacity",
+    selectedType: "getPutNum",
   };
 
   handleChange = (value) => {
@@ -175,12 +175,13 @@ class BucketDetail extends Component {
                 <span>
                   请选择需要查看的数据类型：
                   <Select
-                    defaultValue="memoryCapacity"
+                    defaultValue="getPutNum"
                     style={{ width: 150 }}
                     onChange={this.handleChange}
+                    value={this.state.selectedType}
                   >
-                    <Option value="memoryCapacity">空间容量</Option>
                     <Option value="getPutNum">上传/获取次数</Option>
+                    <Option value="memoryCapacity">空间容量</Option>
                   </Select>
                 </span>
               </Col>
@@ -212,7 +213,7 @@ class BucketDetail extends Component {
             ) : (
               <BarChart width={1300} height={400} data={this.state.statistics}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="dayx" />
+                <XAxis dataKey="day" />
                 <YAxis />
                 <Tooltip />
                 <Legend />

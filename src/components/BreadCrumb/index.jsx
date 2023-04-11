@@ -40,9 +40,9 @@ const BreadCrumb = (props) => {
   const { pathname } = location;
   let path = getPath(menuList, pathname);
   const first = path && path[0];
-  if (first && first.title.trim() !== "首页") {
-    path = [{ title: "首页", path: "/dashboard" }].concat(path);
-  }
+  // if (first && first.title.trim() !== "首页") {
+  //   path = [{ title: "首页", path: "/dashboard" }].concat(path);
+  // }
   return (
     <div className="Breadcrumb-container">
       <Breadcrumb>

@@ -187,6 +187,7 @@ class User extends Component {
       myGdModalVisible: false,
       createGdModalVisible: false,
       checkPassModalVisible: false,
+      changePassModalVisible: false,
     });
   };
 
@@ -379,9 +380,9 @@ class User extends Component {
               >
                 退出登录
               </Button>
-              <Button type="primary" style={{ marginLeft: 10 + "px" }}>
+              {/* <Button type="primary" style={{ marginLeft: 10 + "px" }}>
                 切换账号
-              </Button>
+              </Button> */}
             </Form.Item>
           </Form>
         </Card>
