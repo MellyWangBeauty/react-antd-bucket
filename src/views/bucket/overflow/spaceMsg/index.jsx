@@ -49,6 +49,29 @@ class User extends Component {
     }
   };
 
+  opBucket1 = (type) => {
+    const { bucket } = this.state;
+    let req = {
+      bucketId: bucket.bucketId,
+      authority: 0,
+      bucketName: bucket.bucketName,
+    };
+    if (type === "update") {
+      bucketUpdate(req)
+        .then((response) => {
+          message.success("修改成功!");
+        })
+        .catch((e) => {
+          message.success("修改成功,请重试!");
+        });
+    } else {
+      deleteBucket(bucket.bucketId).then((res) => {
+        message.success("删除成功");
+        this.props.history.push("/bucket");
+      });
+    }
+  };
+
   componentDidMount() {
     let _obj = getParams(this.props.location.search);
     this.setState({
@@ -116,12 +139,21 @@ class User extends Component {
         <Card title={title}>
           <Form {...formItemLayout}>
             <Form.Item label="访问控制">
-              <Button
-                type="primary"
-                onClick={this.opBucket.bind(this, "update")}
-              >
-                修改为公开空间
-              </Button>
+              {this.state.bucket.authority == 0 ? (
+                <Button
+                  type="primary"
+                  onClick={this.opBucket.bind(this, "update")}
+                >
+                  修改为公开空间
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  onClick={this.opBucket1.bind(this, "update")}
+                >
+                  修改为私有空间
+                </Button>
+              )}
             </Form.Item>
           </Form>
           <Form {...formItemLayout}>

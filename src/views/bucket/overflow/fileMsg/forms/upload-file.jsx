@@ -108,11 +108,12 @@ class AddUserForm extends Component {
     console.log("文件md5：", fileMd5);
 
     console.log("向后端请求本次分片上传初始化");
+    const { dir } = this.props;
     //向后端请求本次分片上传初始化
     const initUploadParams = JSON.stringify({
       chunkSize: chunkSize,
       chunkNum: chunkCount,
-      fileName: file.name,
+      fileName: dir == "/" ? file.name : dir + file.name,
       bucketName: this.props.bucket.bucketName,
       identifier: fileMd5,
       totalSize: fileSize,
@@ -222,10 +223,11 @@ class AddUserForm extends Component {
     identifier
   ) => {
     console.log("开始请求后端合并文件");
+    const { dir } = this.props;
     //注意：bucketName请填写你自己的存储桶名称，如果没有，就先创建一个写在这
     const composeParams = JSON.stringify({
       uploadId: uploadId,
-      fileName: fileName,
+      fileName: dir == "/" ? fileName : dir + fileName,
       chunkNum: chunkSize,
       fileSize: fileSize,
       contentType: contentType,
@@ -485,7 +487,7 @@ class AddUserForm extends Component {
   };
 
   render() {
-    const { visible, onCancel, onOk, form, confirmLoading } = this.props;
+    const { visible, onCancel, onOk, form, confirmLoading, dir } = this.props;
     const { getFieldDecorator } = form;
     const { fileList, uploading, ff, cut, showCropper, cropImageUrl } =
       this.state;

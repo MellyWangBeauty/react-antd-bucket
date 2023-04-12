@@ -15,6 +15,7 @@ class AddUserForm extends Component {
       return;
     }
     const { bucket, onOk, dir } = this.props;
+    // console.log("dir", dir);
     bucketFileCreateDir({
       bucketId: bucket.bucketId,
       bucketName: bucket.bucketName,

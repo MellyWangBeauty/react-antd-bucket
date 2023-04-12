@@ -34,34 +34,15 @@ class User extends Component {
     currentRowData: {},
     addUserModalVisible: false,
     addUserModalLoading: false,
+    listQuery: {
+      bucketName: "",
+      type: "",
+      authority: "",
+    },
   };
   bucketQuery = async () => {
     const result = await bucketQuery();
     const bucket = result.data;
-    // let typeName, authorityName;
-    // bucket.map((buc, id) => {
-    //   const { type, authority } = buc;
-    //   switch (type) {
-    //     case 0:
-    //       typeName = "自有空间";
-    //       break;
-    //     case 1:
-    //       typeName = "授权只读";
-    //       break;
-    //     case 2:
-    //       typeName = "授权读写";
-    //       break;
-    //   }
-    //   switch (authority) {
-    //     case 0:
-    //       authorityName = "公开";
-    //       break;
-    //     case 1:
-    //       authorityName = "私有";
-    //       break;
-    //   }
-    //   bucket[id] = { ...buc, type: typeName, authority: authorityName };
-    // });
     this.setState({
       bucket,
     });
@@ -197,6 +178,38 @@ class User extends Component {
     });
   };
 
+  filterBucketNameChange = (e) => {
+    let value = e.target.value;
+    this.setState((state) => ({
+      listQuery: {
+        ...state.listQuery,
+        bucketName: value,
+      },
+    }));
+  };
+
+  filterTypeChange = (value) => {
+    this.setState((state) => ({
+      listQuery: {
+        ...state.listQuery,
+        type: value,
+      },
+    }));
+  };
+
+  filterAuthorityChange = (value) => {
+    this.setState((state) => ({
+      listQuery: {
+        ...state.listQuery,
+        authority: value,
+      },
+    }));
+  };
+
+  filterBucket = () => {
+    console.log(this.state.listQuery);
+  };
+
   /**
    * 加载存储通
    */
@@ -258,7 +271,7 @@ class User extends Component {
                     type="primary"
                     icon="search"
                     // onClick={this.bucketFilter(this.state.listQuery)}
-                    onClick={this.bucketQuery}
+                    onClick={this.filterBucket}
                   >
                     搜索
                   </Button>

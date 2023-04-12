@@ -40,7 +40,7 @@ class AddUserForm extends Component {
       >
         <Form {...formItemLayout}>
           <Form.Item label="密码:">
-            {getFieldDecorator("password", {
+            {getFieldDecorator("userPassword", {
               rules: [{ required: true, validator: this.validatPass }],
             })(<Input placeholder="请输入您的密码" />)}
           </Form.Item>

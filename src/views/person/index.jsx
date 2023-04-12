@@ -9,6 +9,7 @@ import {
   addUser,
   applyKey,
   getMyGd,
+  checkPassword,
 } from "@/api/user";
 import { workOrderAdd } from "@/api/workOrder";
 import "./index.less";
@@ -73,23 +74,6 @@ class User extends Component {
     });
   };
 
-  handleCheckPassOk = (name) => {
-    const { form } = this.changeCheckPassRef.props;
-    console.log("name", name);
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      this.setState({ checkPassModalVisible: false });
-      if (this.state.name == "email") {
-        //弹出更换邮箱
-        this.setState({ changeEmailModalVisible: true });
-      } else {
-        //弹出修改密码
-        this.setState({ changePassModalVisible: true });
-      }
-    });
-  };
   handleChangeEmailOk = (_) => {
     const { form } = this.changeChangeEmailRef.props;
     form.validateFields((err, values) => {
@@ -99,14 +83,6 @@ class User extends Component {
       let { users } = this.state;
       users.email = values.email;
       this.setState({ changeEmailModalVisible: false, users: users });
-      // console.log('更换邮箱的值', values);
-      // if(this.state.name=='email') {
-      //   this.setState({ changeEmailModalVisible: false, });
-      // }else {
-      //   this.setState({ changePassModalVisible: false, });
-      // }
-
-      // this.setState({ editModalLoading: true, });
       let _user = {
         id: users.id,
         userName: users.userName,
@@ -129,6 +105,28 @@ class User extends Component {
         });
     });
   };
+
+  handleCheckPassOk = (name) => {
+    const { form } = this.changeCheckPassRef.props;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      console.log("values", values);
+      checkPassword(values).then((res) => {
+        console.log("res", res);
+      });
+      this.setState({ checkPassModalVisible: false });
+      if (this.state.name == "email") {
+        //弹出更换邮箱
+        this.setState({ changeEmailModalVisible: true });
+      } else {
+        //弹出修改密码
+        this.setState({ changePassModalVisible: true });
+      }
+    });
+  };
+
   handleChangePassOk = (_) => {
     const { form } = this.changePassRef.props;
     form.validateFields((err, values) => {

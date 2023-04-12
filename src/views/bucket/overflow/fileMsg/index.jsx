@@ -164,22 +164,17 @@ class User extends Component {
       });
   };
 
-  bucketDirUpload = (dir) => {
-    this.setState({
-      uploadFile: true,
-      dir: dir,
-    });
-  };
   /**
    * 删除文件
    * @param fileName
    */
   bucketFileDelete = (fileName) => {
-    let { bucket } = this.state;
+    let { bucket, dir } = this.state;
+    console.log(dir);
     bucketFileDelete({
       bucketId: bucket.bucketId,
       bucketName: bucket.bucketName,
-      fileName: fileName,
+      fileName: dir == "/" ? fileName : dir + fileName,
     })
       .then((result) => {
         const { code, data } = result;
@@ -238,7 +233,6 @@ class User extends Component {
   };
 
   componentDidMount() {
-    let { pathname } = this.props.location;
     let _obj = getParams(this.props.location.search);
     this.setState({
       bucket: _obj,
@@ -365,6 +359,9 @@ class User extends Component {
                   dataIndex="size"
                   key="size"
                   align="center"
+                  render={(text, row) => {
+                    return row.dir ? "" : text;
+                  }}
                 />
                 <Column
                   title="操作"

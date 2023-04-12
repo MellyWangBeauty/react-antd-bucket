@@ -62,3 +62,11 @@ export function getMyGd(data) {
     data,
   });
 }
+
+export function checkPassword(data) {
+  return request({
+    url: "/user/password/check",
+    method: "post",
+    data,
+  });
+}
