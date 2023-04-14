@@ -124,3 +124,11 @@ export function bucketGrant(data) {
     data,
   });
 }
+
+export function filterBucket(data) {
+  return request({
+    url: "/bucket",
+    method: "post",
+    data,
+  });
+}

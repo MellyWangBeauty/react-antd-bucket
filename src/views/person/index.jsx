@@ -20,6 +20,7 @@ import CheckPassForm from "./forms/check-pass-form";
 import ChangeEmailForm from "./forms/change-email-form";
 import ChangePassForm from "./forms/change-pass-form";
 import CreateGdForm from "./forms/create-gd-form";
+import AccessKeyForm from "./forms/access-key-form";
 import MyGd from "./forms/my-gd";
 import { logout, getUserInfo } from "@/store/actions";
 import store from "@/store";
@@ -36,6 +37,7 @@ class User extends Component {
     editUserModalLoading: false,
     currentRowData: {},
     uploadFile: false,
+    AccessKeyModalVisible: false,
     addUserModalLoading: false,
     changeEmailModalVisible: false,
     changePassModalVisible: false,
@@ -112,18 +114,26 @@ class User extends Component {
       if (err) {
         return;
       }
-      console.log("values", values);
-      checkPassword(values).then((res) => {
-        console.log("res", res);
-      });
-      this.setState({ checkPassModalVisible: false });
-      if (this.state.name == "email") {
-        //弹出更换邮箱
-        this.setState({ changeEmailModalVisible: true });
-      } else {
-        //弹出修改密码
-        this.setState({ changePassModalVisible: true });
-      }
+      checkPassword(values)
+        .then((res) => {
+          console.log("res", res);
+          if (res.data == true) {
+            message.success("密码验证成功！");
+            this.setState({ checkPassModalVisible: false });
+            if (this.state.name == "email") {
+              //弹出更换邮箱
+              this.setState({ changeEmailModalVisible: true });
+            } else {
+              //弹出修改密码
+              this.setState({ changePassModalVisible: true });
+            }
+          } else {
+            message.error("密码验证失败，请重试！");
+          }
+        })
+        .catch(() => {
+          message.success("编辑失败,请重试!");
+        });
     });
   };
 
@@ -186,6 +196,7 @@ class User extends Component {
       createGdModalVisible: false,
       checkPassModalVisible: false,
       changePassModalVisible: false,
+      AccessKeyModalVisible: false,
     });
   };
 
@@ -260,13 +271,13 @@ class User extends Component {
       createGdModalVisible: true,
     });
   };
-  handleCreateAccessKey = () => {
-    applyKey({}).then((response) => {
-      console.log(response);
-      message.success("申请成功!");
-      // this.reqUserInfo()
-    });
-  };
+  // handleCreateAccessKey = () => {
+  //   applyKey({}).then((response) => {
+  //     console.log(response);
+  //     message.success("申请成功!");
+  //     // this.reqUserInfo()
+  //   });
+  // };
   handleLogout = () => {
     Modal.confirm({
       title: "注销",
@@ -282,6 +293,11 @@ class User extends Component {
     //   debugger
     //   store.dispatch(logout());
     // })
+  };
+  handleAccessKeyOk = () => {
+    this.setState({
+      AccessKeyModalVisible: true,
+    });
   };
 
   componentDidMount() {
@@ -338,11 +354,7 @@ class User extends Component {
         >
           <Form {...formItemLayout}>
             <Form.Item>
-              <Button
-                type="primary"
-                style={{ marginLeft: 10 + "px" }}
-                onClick={this.handleMyGd.bind(null)}
-              >
+              <Button type="primary" onClick={this.handleMyGd.bind(null)}>
                 我的工单
               </Button>
               <Button
@@ -373,14 +385,17 @@ class User extends Component {
             <Form.Item>
               <Button
                 type="primary"
+                onClick={this.handleAccessKeyOk.bind(this)}
+              >
+                密钥管理
+              </Button>
+              <Button
+                type="primary"
                 style={{ marginLeft: 10 + "px" }}
                 onClick={this.handleLogout.bind(null)}
               >
                 退出登录
               </Button>
-              {/* <Button type="primary" style={{ marginLeft: 10 + "px" }}>
-                切换账号
-              </Button> */}
             </Form.Item>
           </Form>
         </Card>
@@ -414,19 +429,16 @@ class User extends Component {
         <MyGd
           wrappedComponentRef={(formRef) => (this.myGdRef = formRef)}
           visible={this.state.myGdModalVisible}
-          // confirmLoading={this.state.addUserModalLoading}
           onCancel={this.handleCancel}
           onOk={this.handleCancel}
           gds={gds}
         />
-        {/*
-        <UploadFile
-          wrappedComponentRef={formRef => this.uploadFileRef = formRef}
-          visible={this.state.uploadFile}
-          // confirmLoading={this.state.addUserModalLoading}
+        <AccessKeyForm
+          wrappedComponentRef={(formRef) => (this.uploadFileRef = formRef)}
+          visible={this.state.AccessKeyModalVisible}
           onCancel={this.handleCancel}
-        // onOk={this.handleAddUserOk}
-        /> */}
+          onOk={this.handleCancel}
+        />
       </div>
     );
   }

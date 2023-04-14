@@ -17,6 +17,7 @@ import {
   checkExits,
   bucketUpdate,
   deleteBucket,
+  filterBucket,
 } from "@/api/bucket";
 import EditUserForm from "./forms/edit-user-form";
 import AddUserForm from "./forms/add-user-form";
@@ -43,6 +44,19 @@ class User extends Component {
   bucketQuery = async () => {
     const result = await bucketQuery();
     const bucket = result.data;
+    this.setState({
+      bucket,
+      listQuery: {
+        bucketName: "",
+        type: "",
+        authority: "",
+      },
+    });
+  };
+  filterBucket = async () => {
+    const result = await filterBucket(this.state.listQuery);
+    const bucket = result.data;
+    // console.log(bucket);
     this.setState({
       bucket,
     });
@@ -206,10 +220,6 @@ class User extends Component {
     }));
   };
 
-  filterBucket = () => {
-    console.log(this.state.listQuery);
-  };
-
   /**
    * 加载存储通
    */
@@ -245,12 +255,16 @@ class User extends Component {
             <Panel header="筛选" key="1">
               <Form layout="inline">
                 <Form.Item label="空间名称:">
-                  <Input onChange={this.filterBucketNameChange} />
+                  <Input
+                    onChange={this.filterBucketNameChange}
+                    value={this.state.listQuery.bucketName}
+                  />
                 </Form.Item>
                 <Form.Item label="空间类型:">
                   <Select
                     style={{ width: 120 }}
                     onChange={this.filterTypeChange}
+                    value={this.state.listQuery.type}
                   >
                     <Select.Option value={0}>自有空间</Select.Option>
                     <Select.Option value={1}>授权只读</Select.Option>
@@ -261,6 +275,7 @@ class User extends Component {
                   <Select
                     style={{ width: 120 }}
                     onChange={this.filterAuthorityChange}
+                    value={this.state.listQuery.authority}
                   >
                     <Select.Option value={0}>公开</Select.Option>
                     <Select.Option value={1}>私有</Select.Option>
@@ -303,7 +318,7 @@ class User extends Component {
               key="authority"
               align="center"
               render={(authority, record, index) => {
-                return authority === 1 ? "公开" : "私有";
+                return authority === 0 ? "公开" : "私有";
               }}
             />
             <Column

@@ -1,7 +1,6 @@
 # Java SDK
 
-此 SDK 适用于 SpringBoot2 及以上版本。使用此 SDK
-构建您的网络应用程序，能让您以非常便捷地方式将数据安全地存储到MyOss上。无论您的网络应用是一个网站程序，还是包括从云端（服务端程序）到终端（手持设备应用）的架构服务或应用，通过MyOss及其
+此 SDK 适用于 SpringBoot2 及以上版本。使用此 SDK构建您的网络应用程序，能让您以非常便捷地方式将数据安全地存储到MyOss上。无论您的网络应用是一个网站程序，还是包括从云端（服务端程序）到终端（手持设备应用）的架构服务或应用，通过MyOss及其
 SDK，都能让您应用程序的终端用户高速上传和下载，同时也让您的服务端更加轻盈。
 
 #### 使用
@@ -23,14 +22,18 @@ myoss:
         config:
         access-key:<your access-key>
         secret-key:<your secret-key>
-
 ```
 
+```java
+//通过JavaBean的方式进行引入
+@Resource
+private MyOssClient myOssClient;
+```
 #### 文件上传
 
 ```java
 //单文件上传，将整个文件上传
-String bucket="bucket name";
+String bucket="bucketName";
 //此处fileName为上传至MyOss中的名字，以/开头
         String fileName="/fileName";
         FileInfo fileInfo=new FileInfo(bucket,fileName);
@@ -49,7 +52,7 @@ String bucket="bucket name";
 #### 文件下载
 
 ```java
-String bucket="bucket name";
+String bucket="bucketName";
         String fileName="/fileName";
 //当你的bucket为private时，需要设置expireTime，否则无效
 //如果为public，则传入null即可
@@ -66,7 +69,7 @@ String bucket="bucket name";
 #### 文件删除
 
 ```java
-String bucket="bucket name";
+String bucket="bucketName";
         String fileName="/fileName";
         FileInfo fileInfo=new FileInfo(bucket,fileName);
         BaseResponse baseResponse=myOssClient.deleteFile(fileInfo);
@@ -76,7 +79,7 @@ String bucket="bucket name";
 #### 文件备份
 
 ```java
-String bucket="bucket name";
+String bucket="bucketName";
         String fileName="/fileName";
         FileInfo fileInfo=new FileInfo(bucket,fileName);
 //备份文件

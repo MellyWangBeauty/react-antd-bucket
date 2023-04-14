@@ -39,14 +39,15 @@ class AddUserForm extends Component {
       >
         <Form {...formItemLayout}>
           <Form.Item label="存储空间名称:">
-            {getFieldDecorator("bucketName")(<Input placeholder="请输入存储空间名称" />)}
+            {getFieldDecorator("bucketName")(
+              <Input placeholder="请输入存储空间名称" />
+            )}
           </Form.Item>
-          <Form.Item label="访问控制:" >
+          <Form.Item label="访问控制:">
             {getFieldDecorator("authority")(
-              <Radio.Group
-              >
-                <Radio value={1}>公开</Radio>
-                <Radio value={0}>私有</Radio>
+              <Radio.Group>
+                <Radio value={0}>公开</Radio>
+                <Radio value={1}>私有</Radio>
               </Radio.Group>
             )}
           </Form.Item>

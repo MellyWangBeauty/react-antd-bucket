@@ -39,8 +39,8 @@ class EditUserForm extends Component {
               initialValue: authority,
             })(
               <Radio.Group>
-                <Radio value={1}>公开</Radio>
-                <Radio value={0}>私有</Radio>
+                <Radio value={0}>公开</Radio>
+                <Radio value={1}>私有</Radio>
               </Radio.Group>
             )}
           </Form.Item>

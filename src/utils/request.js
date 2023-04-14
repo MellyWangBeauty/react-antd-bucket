@@ -15,12 +15,7 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    let u = [
-      "/bucket/checkExits",
-      "/bucket/delete",
-      "/user/logout",
-      "/user/register/sendcode",
-    ];
+    let u = ["/bucket/checkExits", "/bucket/delete", "/user/logout"];
     if (u.includes(config.url.split("?")[0])) {
       config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     } else {

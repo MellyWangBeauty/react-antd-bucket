@@ -139,7 +139,7 @@ class User extends Component {
         <Card title={title}>
           <Form {...formItemLayout}>
             <Form.Item label="访问控制">
-              {this.state.bucket.authority == 0 ? (
+              {this.state.bucket.authority == 1 ? (
                 <Button
                   type="primary"
                   onClick={this.opBucket.bind(this, "update")}

@@ -31,14 +31,6 @@ export function editUser(data) {
   });
 }
 
-export function applyKey(data) {
-  return request({
-    url: "/user/key/apply",
-    method: "post",
-    data,
-  });
-}
-
 export function reqValidatUserID(data) {
   return request({
     url: "/user/validatUserID",
@@ -68,5 +60,19 @@ export function checkPassword(data) {
     url: "/user/password/check",
     method: "post",
     data,
+  });
+}
+
+export function applyKey() {
+  return request({
+    url: "/user/key/apply",
+    method: "get",
+  });
+}
+
+export function removeKey() {
+  return request({
+    url: "/user/key/remove",
+    method: "get",
   });
 }
