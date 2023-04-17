@@ -4,6 +4,7 @@
   "author": "NLRX <414961362@qq.com>",
   "license": "MIT",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@ffmpeg/core": "^0.8.5",
     "@ffmpeg/ffmpeg": "^0.9.6",
@@ -52,6 +53,7 @@
     "redux-thunk": "^2.3.0",
     "screenfull": "^5.0.2",
     "script-loader": "^0.7.2",
+    "serve": "^14.2.0",
     "spark-md5": "^3.0.0",
     "styled-components": "^5.3.9",
     "xlsx": "^0.16.0"
@@ -92,13 +94,13 @@
     "commitizen": "^4.0.3",
     "customize-cra": "^0.9.1",
     "cz-conventional-changelog": "^3.0.2",
+    "http-proxy-middleware": "^2.0.6",
     "mockjs": "^1.1.0",
+    "node-sass": "^8.0.0",
     "raw-loader": "^4.0.2",
     "react-app-rewired": "^2.1.5",
-    "user-agent": "^1.0.4",
-    "http-proxy-middleware": "^2.0.6",
-    "node-sass": "^8.0.0",
-    "sass-loader": "^13.2.0"
+    "sass-loader": "^13.2.0",
+    "user-agent": "^1.0.4"
   },
   "config": {
     "commitizen": {

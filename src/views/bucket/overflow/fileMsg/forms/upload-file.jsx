@@ -113,7 +113,7 @@ class AddUserForm extends Component {
     const initUploadParams = JSON.stringify({
       chunkSize: chunkSize,
       chunkNum: chunkCount,
-      fileName: dir == "/" ? file.name : dir + file.name,
+      fileName: dir === "/" ? file.name : dir + file.name,
       bucketName: this.props.bucket.bucketName,
       identifier: fileMd5,
       totalSize: fileSize,

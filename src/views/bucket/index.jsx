@@ -174,7 +174,7 @@ class User extends Component {
       this.setState({ addUserModalLoading: true });
       checkExits(values.bucketName).then((res) => {
         console.log("res", res);
-        if (res.data != true) {
+        if (res.data !== true) {
           bucketAdd(values).then((response) => {
             form.resetFields();
             message.success("添加成功!");
